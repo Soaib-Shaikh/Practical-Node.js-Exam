@@ -18,6 +18,11 @@ Link:- https://practical-node-js-exam.onrender.com
 
 If admin user does not exist, create a user directly in the database with role set to `admin` or sign up and manually update the role in the DB.
 
+## Admin 
+
+Email : samshaikh1192@gmail.com
+Password: 1002
+
 ## Technologies
 
 - Node.js
