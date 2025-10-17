@@ -4,7 +4,7 @@ A small recipe management app built with Node.js and Express. This README gives 
 
 ## Deploy Link
 
-Link:- 
+Link:- https://practical-node-js-exam.onrender.com
 
 ## Features
 
