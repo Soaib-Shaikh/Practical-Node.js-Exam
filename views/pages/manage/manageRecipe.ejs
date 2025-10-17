@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %>
+
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center mt-5">Manage Recipes</h2>
+
+
+    <div class="row">
+      <% recipes.forEach(recipe => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <img src="<%= recipe.image %>" class="card-img-top" alt="<%= recipe.title %>" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title"><%= recipe.title %></h5>
+              <p class="text-muted mb-1"><%= recipe.category %></p>
+              <p class="card-text text-truncate"><%= recipe.description %></p>
+              <div class="d-flex justify-content-between mt-3">
+                <a href="/recipes/<%= recipe._id %>" class="btn btn-outline-primary btn-sm">View</a>
+                <div>
+                  <a href="/manage/deleteRecipe/<%= recipe._id %>" class="btn btn-danger btn-sm"
+                     onclick="return confirm('Delete this recipe?')">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+<%- include('../../partials/footer') %>

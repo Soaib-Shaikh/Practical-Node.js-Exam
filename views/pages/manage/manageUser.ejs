@@ -1,0 +1,35 @@
+<%- include('../../partials/header') %>
+
+<body class="bg-light" >
+
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center mt-5">Manage Users</h2>
+
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Recipes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach((user, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td><%= user.recipeCount || 0 %></td>
+            <td>
+              <a href="/manage/deleteUser/<%= user._id %>" class="btn btn-danger btn-sm"
+                 onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+<%- include('../../partials/footer') %>

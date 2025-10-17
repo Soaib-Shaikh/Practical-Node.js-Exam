@@ -1,0 +1,92 @@
+<%- include('../../partials/header') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title mb-3 text-center">Your Profile</h4>
+          <div class="text-center mb-3">
+            <% if (user.image) { %>
+              <img src="<%= user.image %>" alt="profile" class="rounded-circle" width="120" height="120" style="object-fit:cover;">
+            <% } else { %>
+              <img src="/images/faces/face1.jpg" alt="profile" class="rounded-circle" width="120" height="120">
+            <% } %>
+          </div>
+
+          <div id="profileView">
+            <p><strong>Username:</strong> <%= user.username %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Age:</strong> <%= user.age || 'N/A' %></p>
+            <p><strong>Mobile:</strong> <%= user.mobilenumber || 'N/A' %></p>
+            <p><strong>Address:</strong> <%= user.address || 'N/A' %></p>
+            <p><strong>Gender:</strong> <%= user.gender || 'N/A' %></p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary" id="editBtn">Edit</button>
+              <form method="post" action="/auth/profile/delete" onsubmit="return confirm('Delete account? This cannot be undone')">
+                <button class="btn btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+
+          <form id="profileEditForm" method="post" action="/auth/profile" enctype="multipart/form-data" style="display:none;">
+            <div class="mb-2">
+              <label class="form-label">Profile Image</label>
+              <input class="form-control" type="file" name="image" accept="image/*">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Username</label>
+              <input class="form-control" type="text" name="username" id="e_username" value="<%= user.username %>" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Email</label>
+              <input class="form-control" type="email" name="email" id="e_email" value="<%= user.email %>" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Age</label>
+              <input class="form-control" type="number" name="age" id="e_age" value="<%= user.age || '' %>">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Mobile</label>
+              <input class="form-control" type="text" name="mobilenumber" id="e_mobile" value="<%= user.mobilenumber || '' %>">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Address</label>
+              <input class="form-control" type="text" name="address" id="e_address" value="<%= user.address || '' %>">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Gender</label>
+              <select name="gender" id="e_gender" class="form-control">
+                <option value="male" <%= user.gender==='male' ? 'selected' : '' %>>Male</option>
+                <option value="female" <%= user.gender==='female' ? 'selected' : '' %>>Female</option>
+                <option value="other" <%= (!user.gender || user.gender==='other') ? 'selected' : '' %>>Other</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Password <span class="text-muted">(leave blank to keep unchanged)</span></label>
+              <input class="form-control" type="password" name="password" placeholder="New password">
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary" type="submit">Save</button>
+              <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer') %>
+
+<script>
+  document.getElementById('editBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('profileView').style.display = 'none';
+    document.getElementById('profileEditForm').style.display = 'block';
+  });
+  document.getElementById('cancelEdit').addEventListener('click', function() {
+    document.getElementById('profileEditForm').style.display = 'none';
+    document.getElementById('profileView').style.display = 'block';
+  });
+</script>

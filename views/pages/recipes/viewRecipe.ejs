@@ -1,0 +1,83 @@
+<%- include('../../partials/header.ejs') %>
+
+<div class="container-fluid mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><%= recipe.name %></h3>
+    <a href="/" class="btn btn-outline-secondary btn-sm"><i class="mdi mdi-arrow-left"></i> Back</a>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 mb-4">
+      <div class="card shadow-sm" style="border-radius:12px;">
+        <% if (recipe.image) { %>
+          <img src="<%= recipe.image %>" class="card-img-top" style="height:350px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;">
+        <% } else { %>
+          <img src="/images/placeholder-food.jpg" class="card-img-top" style="height:350px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;">
+        <% } %>
+
+        <div class="card-body">
+          <h5 class="fw-bold"><%= recipe.name %></h5>
+          <% if (recipe.cuisine) { %>
+            <span class="badge bg-primary me-1"><%= recipe.cuisine %></span>
+          <% } %>
+          <span class="badge bg-info">Difficulty: <%= recipe.difficulty %></span>
+          <p class="text-muted mt-2"><i class="mdi mdi-clock-outline"></i> <%= recipe.time %> mins</p>
+          <p class="lead"><%= recipe.description %></p>
+
+          <hr>
+          <h6>Ingredients</h6>
+          <ul class="list-group mb-4">
+            <% recipe.ingredients.forEach(ing => { %>
+              <li class="list-group-item"><i class="mdi mdi-circle-small text-success me-2"></i> <%= ing %></li>
+            <% }) %>
+          </ul>
+
+          <h6>Instructions</h6>
+          <p style="white-space: pre-line;"><%= recipe.instructions %></p>
+        </div>
+
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+          <small class="text-muted">By <%= recipe.author ? (recipe.author.username || recipe.author.name || 'Unknown') : 'Unknown' %></small>
+          <div>
+            <a href="/recipe/edit/<%= recipe._id %>" class="btn btn-outline-primary btn-sm me-2"><i class="mdi mdi-pencil"></i> Edit</a>
+            <form action="/recipe/delete/<%= recipe._id %>" method="POST" class="d-inline">
+              <button class="btn btn-outline-danger btn-sm"><i class="mdi mdi-delete"></i> Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+      <div class="card shadow-sm" style="border-radius:12px;">
+        <div class="card-body">
+          <h6>Quick Info</h6>
+          <p><strong>Time:</strong> <%= recipe.time %> mins</p>
+          <% if (recipe.cuisine) { %>
+            <p><strong>Cuisine:</strong> <%= recipe.cuisine %></p>
+          <% } %>
+          <p><strong>Difficulty:</strong> <%= recipe.difficulty %></p>
+          <p><strong>Author:</strong> <%= recipe.author ? (recipe.author.username || recipe.author.name || 'Unknown') : 'Unknown' %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer.ejs') %>
+
+<style>
+  .card img {
+    border-bottom: 1px solid #eee;
+  }
+  .lead {
+    font-size: 16px;
+    color: #555;
+  }
+  .badge {
+    font-size: 13px;
+  }
+  ul.list-group li {
+    font-size: 14px;
+  }
+</style>
