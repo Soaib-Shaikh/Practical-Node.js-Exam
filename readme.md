@@ -15,12 +15,6 @@ Link:- https://practical-node-js-exam.onrender.com
 - Admin area to manage users and recipes (restricted by user role)
 - Simple EJS templates for server-side rendering
 
-## Default admin login (for testing)
-
-Use these credentials to log in as admin (if the admin user exists in DB or create one manually):
-
-- Email: admin@example.com
-- Password: admin123
 
 If admin user does not exist, create a user directly in the database with role set to `admin` or sign up and manually update the role in the DB.
 
