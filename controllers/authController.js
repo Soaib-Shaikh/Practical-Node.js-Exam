@@ -9,33 +9,35 @@ module.exports.getLogin = (req, res) => {
 
 module.exports.postLogin = async (req, res) => {
   try {
-        const {email,password} = req.body;
-        let user = await User.findOne({email});
-        if(user){
-            
-            let isValid = await bcrypt.compare(password,user.password);
+    const { email, password } = req.body;
+    let user = await User.findOne({ email });
+    if (user) {
 
-            if(isValid){
-                let payload = {
-                    id : user.id,
-                    role : user.role,
-                    name: user.username
-                }
+      let isValid = await bcrypt.compare(password, user.password);
 
-                const jwtSecret = process.env.SECRET_KEY || process.env.SESSION_SECRET || process.env.PRIVATE_KEY;
-                let token = jwt.sign(payload, jwtSecret);
-                res.cookie('token',token);
-                return res.status(200).redirect('/');
-            }else{
-                return res.status(401).redirect('/auth/login?error=' + encodeURIComponent('Invalid Password'));
-            }
+      if (isValid) {
+        const payload = {
+          id: user.id,
+          role: user.role,
+          name: user.username
+        };
+        const jwtSecret = process.env.SECRET_KEY || process.env.SESSION_SECRET || process.env.PRIVATE_KEY;
+        const token = jwt.sign(payload, jwtSecret);
+        res.cookie('token', token);
 
-        }else{
-            return res.status(401).redirect('/auth/login?error=' + encodeURIComponent('No user found'));
-        }
-    } catch (error) {
-        return res.status(500).json({message:error.message});
+        // ✅ Redirect to home/dashboard
+        return res.redirect('/');
+      
+    } else {
+      return res.status(401).redirect('/auth/login?error=' + encodeURIComponent('Invalid Password'));
     }
+
+  }else {
+    return res.status(401).redirect('/auth/login?error=' + encodeURIComponent('No user found'));
+  }
+} catch (error) {
+  return res.status(500).json({ message: error.message });
+}
 };
 
 module.exports.getSignup = (req, res) => {
